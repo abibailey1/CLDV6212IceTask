@@ -22,6 +22,8 @@ namespace AppointmentApp.Controllers {
 
         //Register new user
         [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register (RegistrationDTO dto) {
             //Create new user
             var newUser = new User { Userid = Guid.NewGuid().ToString(),
@@ -33,18 +35,31 @@ namespace AppointmentApp.Controllers {
             //Hash user password
             newUser.PasswordHash = _hasher.HashPassword(newUser, dto.Password);
 
-            //Store new user
-            _context.Users.Add(newUser);
-            await _context.SaveChangesAsync();
+            try {
+                //Store new user
+                _context.Users.Add(newUser);
+                await _context.SaveChangesAsync();
 
-            return StatusCode(201);
+                return StatusCode(201);
+            } catch {
+                return StatusCode(400);
+            }
         }
 
         //Logs an existing user in
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login(LoginDTO dto) {
-            //Find an existing user with the entered email
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == dto.Email.ToLower());
+           User? user;
+
+            //Try to find an existing user with the entered email
+            try {
+                user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == dto.Email.ToLower());
+            } catch {
+                return StatusCode(400);
+            }
 
             if (user == null) {
                 return Unauthorized("Invalid email or password.");
