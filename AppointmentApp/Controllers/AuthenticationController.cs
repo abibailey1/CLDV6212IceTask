@@ -60,7 +60,7 @@ namespace AppointmentApp.Controllers {
             //Create cookie claims
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, user.Role.ToLower())
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
