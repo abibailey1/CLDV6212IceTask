@@ -24,7 +24,7 @@ namespace AppointmentApp.Controllers {
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Register (RegistrationDTO dto) {
+        public async Task<IActionResult> Register ([FromBody] RegistrationDTO dto) {
             //Create new user
             var newUser = new User { Userid = Guid.NewGuid().ToString(),
                                     FirstName = dto.FirstName,
@@ -51,7 +51,7 @@ namespace AppointmentApp.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Login(LoginDTO dto) {
+        public async Task<IActionResult> Login([FromBody] LoginDTO dto) {
            User? user;
 
             //Try to find an existing user with the entered email
