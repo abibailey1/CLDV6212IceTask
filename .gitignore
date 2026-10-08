@@ -1,0 +1,9 @@
+# Ignore the entire bin folder
+bin/
+obj/
+.vs/
+
+# Ignore any standalone binary files
+*.bin
+*.exe
+*.dll
