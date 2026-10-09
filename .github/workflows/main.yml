@@ -87,18 +87,40 @@ jobs:
       - name: Build Docker Compose services
         run: docker compose build
 
+
   security-scan:
-  - name: Scan dependencies and configuration
-  uses: aquasecurity/trivy-action@master
-  with:
-    scan-type: fs
-    scan-ref: .
-    scanners: vuln,secret,misconfig
-    format: table
-    exit-code: "0"
-    ignore-unfixed: true
+    name: Security Scanning
+    runs-on: ubuntu-latest
+    needs: build-and-test
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: csharp
+
+      - name: Build for CodeQL
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Analyze source code
+        uses: github/codeql-action/analyze@v3
+
+      - name: Scan dependencies and configuration
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret,misconfig
+          format: table
+          exit-code: "0"
+          ignore-unfixed: true
+          
+     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
