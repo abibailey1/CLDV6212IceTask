@@ -18,5 +18,5 @@ ENV ASPNETCORE_HTTP_PORTS=8080
 EXPOSE 8080
 
 COPY --from=build /app/publish .
-
+USER app
 ENTRYPOINT ["dotnet", "AppointmentApp.dll"]
