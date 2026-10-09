@@ -17,7 +17,10 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddHttpClient<IApiClient, ApiClient>(c =>
 {
-    c.BaseAddress = new Uri("https://localhost:7083/");
+    var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"]
+                     ?? "https://localhost:7083/";
+
+    c.BaseAddress = new Uri(apiBaseUrl);
 });
 
 var app = builder.Build();
