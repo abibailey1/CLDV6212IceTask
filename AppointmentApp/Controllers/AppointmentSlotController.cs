@@ -22,6 +22,7 @@ namespace AppointmentApp.Controllers {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AppointmentSlot>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAppointmentSlots() {
             try {
@@ -42,6 +43,7 @@ namespace AppointmentApp.Controllers {
         [HttpGet("{slotId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AppointmentSlot))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAppointmentSlot(string slotId) {
             AppointmentSlot? slot;
@@ -65,6 +67,8 @@ namespace AppointmentApp.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> CreateAppointmentSlot([FromBody] AppointmentSlotDTO dto) {
             var newSlot = new AppointmentSlot {
                 SlotId = Guid.NewGuid().ToString(),
@@ -91,6 +95,8 @@ namespace AppointmentApp.Controllers {
         [HttpPut("{slotId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAppointmentSlot(string slotId, [FromBody] AppointmentSlotDTO dto) {
 
@@ -122,6 +128,8 @@ namespace AppointmentApp.Controllers {
         [HttpDelete("{slotId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAppointmentSlot(string slotId) {
 

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace AppointmentApp.Models;
 
@@ -26,10 +27,12 @@ public partial class Appointment
     [Column(TypeName = "timestamp without time zone")]
     public DateTime CreatedAt { get; set; }
 
+    [JsonIgnore]
     [ForeignKey("SlotId")]
     [InverseProperty("Appointments")]
     public virtual AppointmentSlot Slot { get; set; } = null!;
 
+    [JsonIgnore]
     [ForeignKey("UserId")]
     [InverseProperty("Appointments")]
     public virtual User User { get; set; } = null!;

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace AppointmentApp.Models;
 
@@ -20,6 +21,7 @@ public partial class AppointmentSlot
 
     public bool? IsAvailable { get; set; }
 
+    [JsonIgnore]
     [InverseProperty("Slot")]
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 }

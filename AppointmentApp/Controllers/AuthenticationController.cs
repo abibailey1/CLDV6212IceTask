@@ -30,7 +30,7 @@ namespace AppointmentApp.Controllers {
                                     FirstName = dto.FirstName,
                                     LastName = dto.LastName,
                                     Email = dto.Email,
-                                    Role = dto.Role};
+                                    Role = dto.Role.ToLower()};
 
             //Hash user password
             newUser.PasswordHash = _hasher.HashPassword(newUser, dto.Password);
@@ -75,7 +75,7 @@ namespace AppointmentApp.Controllers {
             //Create cookie claims
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToLower())
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
