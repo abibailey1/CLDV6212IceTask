@@ -21,7 +21,7 @@ env:
   DOTNET_VERSION: 10.0.x
   # Path to your solution/project, relative to the repo root.
   # Solution file committed at the repo root (see setup notes).
-  SOLUTION: CLDV6212IceTask.slnx
+  SOLUTION: AppointmentApp.slnx
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
  
