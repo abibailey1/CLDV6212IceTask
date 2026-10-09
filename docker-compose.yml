@@ -1,7 +1,7 @@
 services:
   api:
     build:
-      context: ./web-api
+      context: ./Web-api
       dockerfile: AppointmentApp/Dockerfile
     ports:
       - "7083:8080"
@@ -12,7 +12,7 @@ services:
 
   webapp:
     build:
-      context: ./web-app
+      context: ./Web-app
       dockerfile: AppointmentApp/Dockerfile
     ports:
       - "8080:8080"
