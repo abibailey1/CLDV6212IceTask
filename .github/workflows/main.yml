@@ -19,21 +19,22 @@ concurrency:
  
 env:
   DOTNET_VERSION: 10.0.x
-  # Path to your solution/project, relative to the repo root.
-  # Solution file committed at the repo root (see setup notes).
-  SOLUTION: AppointmentApp.slnx
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
  
 jobs:
-  # ---------------------------------------------------------------------
-  # PLACEHOLDER: replace with your existing build-and-test job.
-  # The security-scan job below depends on this job name.
-  # ---------------------------------------------------------------------
   build-and-test:
-    name: Build and Test
+    name: Build and Test (${{ matrix.project }})
     runs-on: ubuntu-latest
     timeout-minutes: 30
+ 
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [Web-Api, Web-App]
+ 
+    env:
+      SOLUTION: ${{ matrix.project }}/AppointmentApp.slnx
  
     steps:
       - name: Checkout repository
@@ -53,9 +54,6 @@ jobs:
       - name: Test
         run: dotnet test ${{ env.SOLUTION }} --no-build -c Release
  
-  # ---------------------------------------------------------------------
-  # Security scanning
-  # ---------------------------------------------------------------------
   security-scan:
     name: Security Scanning
     runs-on: ubuntu-latest
@@ -89,8 +87,11 @@ jobs:
           languages: csharp
           build-mode: manual
  
+      # Build both solutions so CodeQL analyses the API and the web app
       - name: Build for CodeQL
-        run: dotnet build ${{ env.SOLUTION }} --no-incremental -c Release
+        run: |
+          dotnet build Web-Api/AppointmentApp.slnx --no-incremental -c Release
+          dotnet build Web-App/AppointmentApp.slnx --no-incremental -c Release
  
       - name: Analyze source code
         uses: github/codeql-action/analyze@v3
