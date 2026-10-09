@@ -32,14 +32,14 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Restore dependencies
+  run: dotnet restore AppointmentBooking/AppointmentBooking.sln
 
-      - name: Build solution
-        run: dotnet build --configuration Release --no-restore
+- name: Build solution
+  run: dotnet build AppointmentBooking/AppointmentBooking.sln --configuration Release --no-restore
 
-      - name: Run tests
-        run: dotnet test --configuration Release --no-build
+- name: Run tests
+  run: dotnet test AppointmentBooking/AppointmentBooking.sln --configuration Release --no-build
 
   docker-build:
     name: Build Docker Containers
