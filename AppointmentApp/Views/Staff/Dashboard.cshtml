@@ -1,0 +1,44 @@
+﻿@model List<AppointmentApp.Models.Appointment>
+@{
+    ViewData["Title"] = "All Appointments";
+}
+
+<h1 class="mb-4">All Appointments</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No appointments yet.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Slot</th>
+                <th>Patient ID</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.AppointmentDate.ToString("yyyy-MM-dd")</td>
+                <td>
+                    <span class="badge bg-@(a.Status == "Cancelled" ? "danger" : "success")">
+                        @a.Status
+                    </span>
+                </td>
+                <td>@a.SlotId</td>
+                <td>@a.UserId</td>
+                <td>
+                    <a class="btn btn-sm btn-outline-secondary"
+                       asp-action="EditAppointment" asp-route-id="@a.AppointmentId">Edit</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

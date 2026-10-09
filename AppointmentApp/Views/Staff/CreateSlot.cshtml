@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Create Slot";
+}
+
+<h1 class="mb-4">Create Slot</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-action="CreateSlot">
+
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <input name="Date" type="date" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Start Time</label>
+                <input name="StartTime" type="time" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">End Time</label>
+                <input name="EndTime" type="time" class="form-control" required />
+            </div>
+
+            <div class="mb-3 form-check">
+                <input name="IsAvailable" type="checkbox" class="form-check-input" value="true" checked />
+                <label class="form-check-label">Available</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a class="btn btn-secondary" asp-action="Slots">Cancel</a>
+        </form>
+    </div>
+</div>

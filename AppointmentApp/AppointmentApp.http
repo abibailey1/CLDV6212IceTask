@@ -1,6 +1,17 @@
-@AppointmentApp_HostAddress = http://localhost:5183
+@host = http://localhost:5183
 
-GET {{AppointmentApp_HostAddress}}/weatherforecast/
+### Dashboard (HTML)
+GET {{host}}/
+Accept: text/html
+
+### Book page (HTML)
+GET {{host}}/Home/Book
+Accept: text/html
+
+### API — all appointments (JSON)
+GET {{host}}/api/appointments
 Accept: application/json
 
-###
+### API — slots by date
+GET {{host}}/api/slots?date=2025-01-15
+Accept: application/json

@@ -1,0 +1,40 @@
+﻿@model AppointmentApp.Models.AppointmentSlot
+@{
+    ViewData["Title"] = "Edit Slot";
+}
+
+<h1 class="mb-4">Edit Slot</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-action="EditSlot" asp-route-id="@Model.SlotId">
+
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <input name="Date" type="date" class="form-control"
+                       value="@Model.Date.ToString("yyyy-MM-dd")" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Start Time</label>
+                <input name="StartTime" type="time" class="form-control"
+                       value="@Model.StartTime?.ToString("HH\\:mm")" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">End Time</label>
+                <input name="EndTime" type="time" class="form-control"
+                       value="@Model.EndTime?.ToString("HH\\:mm")" required />
+            </div>
+
+            <div class="mb-3 form-check">
+                <input name="IsAvailable" type="checkbox" class="form-check-input"
+                       value="true" @(Model.IsAvailable == true ? "checked" : "") />
+                <label class="form-check-label">Available</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-secondary" asp-action="Slots">Cancel</a>
+        </form>
+    </div>
+</div>

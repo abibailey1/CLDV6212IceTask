@@ -1,36 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
-namespace AppointmentApp.Models;
-
-public partial class Appointment
+namespace AppointmentApp.Models
 {
-    [Key]
-    [Column(TypeName = "character varying")]
-    public string AppointmentId { get; set; } = null!;
+    public class Appointment
+    {
+        [Key]
+        [Column(TypeName = "character varying")]
+        public string AppointmentId { get; set; } = null!;
 
-    [Column(TypeName = "character varying")]
-    public string UserId { get; set; } = null!;
+        [Column(TypeName = "character varying")]
+        public string UserId { get; set; } = null!;
 
-    [Column(TypeName = "character varying")]
-    public string SlotId { get; set; } = null!;
+        [Column(TypeName = "character varying")]
+        public string SlotId { get; set; } = null!;
 
-    public DateOnly AppointmentDate { get; set; }
+        public DateOnly AppointmentDate { get; set; }
 
-    [Column(TypeName = "character varying")]
-    public string Status { get; set; } = null!;
+        [Column(TypeName = "character varying")]
+        public string Status { get; set; } = null!;
 
-    [Column(TypeName = "timestamp without time zone")]
-    public DateTime CreatedAt { get; set; }
+        [Column(TypeName = "timestamp without time zone")]
+        public DateTime CreatedAt { get; set; }
 
-    [ForeignKey("SlotId")]
-    [InverseProperty("Appointments")]
-    public virtual AppointmentSlot Slot { get; set; } = null!;
+        [JsonIgnore]
+        [ForeignKey("SlotId")]
+        public virtual AppointmentSlot Slot { get; set; } = null!;
 
-    [ForeignKey("UserId")]
-    [InverseProperty("Appointments")]
-    public virtual User User { get; set; } = null!;
+        [JsonIgnore]
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; } = null!;
+    }
 }

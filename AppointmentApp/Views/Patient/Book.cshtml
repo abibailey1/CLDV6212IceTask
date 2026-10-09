@@ -1,0 +1,35 @@
+﻿@model AppointmentApp.ViewModels.BookViewModel
+@{
+    ViewData["Title"] = "Book Appointment";
+    var slots = ViewBag.Slots as List<AppointmentApp.Models.AppointmentSlot>;
+}
+
+<h1 class="mb-4">Book an Appointment</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-action="Book">
+            <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
+            <div class="mb-3">
+                <label asp-for="SlotId" class="form-label">Available Slot</label>
+                <select asp-for="SlotId" class="form-select">
+                    <option value="">-- Select a slot --</option>
+                    @if (slots != null)
+                    {
+                        foreach (var s in slots)
+                        {
+                            <option value="@s.SlotId">
+                                @s.Date.ToString("yyyy-MM-dd") — @s.StartTime to @s.EndTime
+                            </option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="SlotId" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Book</button>
+            <a class="btn btn-secondary" asp-action="Dashboard">Cancel</a>
+        </form>
+    </div>
+</div>
