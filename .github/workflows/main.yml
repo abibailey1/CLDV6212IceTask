@@ -19,6 +19,9 @@ concurrency:
  
 env:
   DOTNET_VERSION: 10.0.x
+  # Path to your solution/project, relative to the repo root.
+  # Solution file committed at the repo root (see setup notes).
+  SOLUTION: CLDV6212IceTask.slnx
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
  
@@ -42,13 +45,13 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
  
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore ${{ env.SOLUTION }}
  
       - name: Build
-        run: dotnet build --no-restore -c Release
+        run: dotnet build ${{ env.SOLUTION }} --no-restore -c Release
  
       - name: Test
-        run: dotnet test --no-build -c Release
+        run: dotnet test ${{ env.SOLUTION }} --no-build -c Release
  
   # ---------------------------------------------------------------------
   # Security scanning
@@ -87,7 +90,7 @@ jobs:
           build-mode: manual
  
       - name: Build for CodeQL
-        run: dotnet build --no-incremental -c Release
+        run: dotnet build ${{ env.SOLUTION }} --no-incremental -c Release
  
       - name: Analyze source code
         uses: github/codeql-action/analyze@v3
