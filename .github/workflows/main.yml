@@ -32,17 +32,23 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Find solution and project files
-        run: find . -type f \( -name "*.sln" -o -name "*.slnx" -o -name "*.csproj" \)
+      - name: Restore Web API
+        run: dotnet restore Web-Api/*.csproj
 
-      - name: Restore dependencies
-        run: dotnet restore AppointmentBooking/AppointmentBooking.sln
+      - name: Restore Web App
+        run: dotnet restore Web-App/*.csproj
 
-      - name: Build solution
-        run: dotnet build AppointmentBooking/AppointmentBooking.sln --configuration Release --no-restore
+      - name: Build Web API
+        run: dotnet build Web-Api/*.csproj --configuration Release --no-restore
 
-      - name: Run tests
-        run: dotnet test AppointmentBooking/AppointmentBooking.sln --configuration Release --no-build
+      - name: Build Web App
+        run: dotnet build Web-App/*.csproj --configuration Release --no-restore
+
+      - name: Test Web API
+        run: dotnet test Web-Api/*.csproj --configuration Release --no-build
+
+      - name: Test Web App
+        run: dotnet test Web-App/*.csproj --configuration Release --no-build
 
   docker-build:
     name: Build Docker Containers
