@@ -1,11 +1,12 @@
 services:
+  # ASP.NET Core API
   - type: web
     name: appointment-api
     runtime: docker
     region: frankfurt
     plan: free
-    dockerfilePath: ./web-api/AppointmentApp/Dockerfile
-    dockerContext: ./web-api
+    dockerfilePath: ./Web-Api/AppointmentApp/Dockerfile
+    dockerContext: ./Web-Api
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
@@ -14,13 +15,14 @@ services:
       - key: ConnectionStrings__DefaultConnection
         sync: false
 
+  # ASP.NET Core Web App
   - type: web
     name: appointment-web
     runtime: docker
     region: frankfurt
     plan: free
-    dockerfilePath: ./web-app/AppointmentApp/Dockerfile
-    dockerContext: ./web-app
+    dockerfilePath: ./Web-App/AppointmentApp/Dockerfile
+    dockerContext: ./Web-App
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
