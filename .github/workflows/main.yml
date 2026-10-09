@@ -22,6 +22,7 @@ jobs:
   build-and-test:
     name: Build and Test
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,7 +30,7 @@ jobs:
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Find solution and project files
         run: find . -type f \( -name "*.sln" -o -name "*.slnx" -o -name "*.csproj" \)
@@ -41,7 +42,12 @@ jobs:
         run: dotnet build AppointmentBooking/AppointmentBooking.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test AppointmentBooking/AppointmentBooking.sln --configuration Release --no-build-no-build
+        run: dotnet test AppointmentBooking/AppointmentBooking.sln --configuration Release --no-build
+
+  docker-build:
+    name: Build Docker Containers
+    runs-on: ubuntu-latest
+    needs: build-and-test
 
     steps:
       - name: Checkout repository
